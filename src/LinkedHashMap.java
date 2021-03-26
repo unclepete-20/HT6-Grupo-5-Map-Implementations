@@ -1,58 +1,58 @@
 import java.util.Set;
 
-public class LinkedHashMap<K,v> implements Map{
-
+public class LinkedHashMap<K,V> implements Map{
+    LinkedHashMap<K,V> linkedHashMap = new LinkedHashMap<>();
     public LinkedHashMap() {
 
     }
 
     @Override
     public int size() {
-        return 0;
+        return linkedHashMap.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return linkedHashMap.isEmpty();
     }
 
     @Override
     public boolean containsKey(Object o) {
-        return false;
+        return linkedHashMap.containsKey(o);
     }
 
     @Override
     public boolean containsValue(Object o) {
-        return false;
+        return linkedHashMap.containsValue(o);
     }
 
     @Override
     public Object get(Object o) {
-        return null;
+        return linkedHashMap.get(o);
     }
 
     @Override
     public Object put(Object o, Object o2) {
-        return null;
+        return linkedHashMap.put(o,o2);
     }
 
     @Override
     public Object remove(Object o) {
-        return null;
+        return linkedHashMap.remove(o);
     }
 
     @Override
     public void putAll(Map other) {
-
+        linkedHashMap.putAll(other);
     }
 
     @Override
     public void clear() {
-
+        linkedHashMap.clear();
     }
 
     @Override
     public Set keySet() {
-        return null;
+        return linkedHashMap.keySet();
     }
 }
