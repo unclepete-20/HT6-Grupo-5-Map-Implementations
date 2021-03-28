@@ -1,18 +1,33 @@
-import java.util.Collections;
+/**
+ * Universidad del Valle de Guatemala
+ * Algoritmos y Estructuras de Datos (Sección 10)
+ * HDT 6
+ * Pedro Arriola (20188) y Maria Isabel Solano (20504)
+ * 
+ * -> Main.java
+ * Archivo principal de la hoja de trabajo, el cual contiene el
+ * método main, que ejecuta todo el programa.
+ * 
+ * @author MaIsabelSolano
+ * @author unclepete-20
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.util.*;
 import java.util.Scanner;
 
 class Main{
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args){
 
         //Instancias iniciales para asegurar funcionalidad del programa.
-        Factory<String, String> factory = new Factory();
+        final Factory<String, String> factory = new Factory<String, String>();
         Scanner scan = new Scanner(System.in);
-        MapImplementation<String,String>coleccionCompletaCartas; 
-        MapImplementation<String,String> coleccionUsuario;   
+        final MapImplementation<String,String>coleccionCompletaCartas; 
+        final MapImplementation<String,String> coleccionUsuario;   
 
         //inicio del programa
 
@@ -20,7 +35,7 @@ class Main{
         String implementation = "";
 
 
-        while ( ciclo_main == true) {
+        while (ciclo_main) {
             try {
             System.out.println("Elige la implementacion de Map que utilizaras\n");
             System.out.println("1) HashMap\n2) TreeMap\n3) LinkedHashMap\n");
@@ -91,16 +106,12 @@ class Main{
             e.printStackTrace();
         }
 
+
         boolean menu = true;
 
-        while (menu) {
+        while(menu){
 
-            System.out.println("\n______________________-----------------------------------______________________");
-            System.out.println("______________________----------Coleccion de Cartas------" +
-                "" +
-                "---______________________");
-            System.out.println("______________________-----------------------------------______________________\n\n");
-
+            System.out.println("\n////////////////////////////////// COLECCION DE CARTAS //////////////////////////////////\n");
             //Se muestran todas las opciones del menu.
             System.out.println("Ingrese la opcion para realizar la operacion que desea en la coleccion de cartas o la personal:\n\n");
             System.out.println("1) Agregar nueva carta a la coleccion personal\n");
@@ -111,21 +122,23 @@ class Main{
             System.out.println("6) Mostrar el nombre y tipo de todas las cartas existentes ordenadas por tipo\n");
             System.out.println("7) Salir\n");
 
+
             int option = 0;
 
-            boolean executing = true;
+            boolean answer = true;
 
-            while (executing) { //Verifica que la opcion elegida existe y tambien verifica que sea un valor numerico.
+            while (answer) {
                 try {
                     option = scan.nextInt();
-                    
+                    scan.nextLine();
                     if (option > 7 || option < 1) {
-                        System.out.println("\nOpcion invalida, ingrese una opcion existente.");
+                        System.out.println("\nPor favor ingrese una opcion valida.");
                     } else {
-                        executing = false;
+                        answer = false;
                     }
                 } catch (Exception e) {
-                    System.out.println("\nIngrese un valor numerico");
+                    System.out.println("\nPor favor ingrese un valor numerico.");
+                    scan.nextInt();
                 }
             }
 
@@ -135,50 +148,39 @@ class Main{
 
 
                 case 1: //Agregar carta a coleccion personal.
-                    System.out.println("\nIngrese el nombre de la carta que quiere agregar a su coleccion personal\n");
 
-                    String cardName = scan.next();
-
-                    if(coleccionCompletaCartas.containsKey(cardName)){
-                        if(coleccionUsuario.containsKey(cardName)){
-
-                            System.out.println("\nLa carta ya esta ingresada en su coleccion personal :)\n");
-
-                        } else {
-                            String type = coleccionCompletaCartas.get(cardName);
-
-                            coleccionUsuario.put(cardName, type);
-
-                        }
-
-                    } else {
-                        System.out.println("\nLa carta que quiere agregar a su coleccion no existe en la baraja principal.\n");
-                    }
-                    
+                    MapAdministrator.agregarCarta(coleccionCompletaCartas, coleccionUsuario);                    
                     break;
 
 
-                case 2: //
+                case 2: //Mostrar el tipo de una carta específica
 
+                    MapAdministrator.infoCarta(coleccionCompletaCartas);
                     break;
 
 
-                case 3: //
-                   
-                   
+                case 3: //Mostrar el nombre, tipo y cantidad de cada carta en la coleccion personal
 
-                case 4: //Mostrar el nombre, tipo y cantidad de cada carta (Coleccion personal).
+                    MapAdministrator.info(coleccionUsuario);
+                    MapAdministrator.count(coleccionUsuario);
+                
+                    break;
 
+                case 4: //Mostrar el nombre, tipo y cantidad de cada carta (Coleccion personal) ordenadas por tipo.
+
+                    MapAdministrator.sort(coleccionUsuario);
+                    MapAdministrator.count(coleccionUsuario);
                     break;
 
                 case 5: // Nombre y tipos de todas las cartas.
 
+                    MapAdministrator.info(coleccionCompletaCartas);
                     
                     break;
 
                 case 6: //Nombre y tipos de todas las cartas ordenadas por tipo.
 
-   
+                    MapAdministrator.sort(coleccionCompletaCartas);
 
                     break;
 
@@ -187,11 +189,14 @@ class Main{
                     scan.close();
                     menu = false;
                     break;
-
+                
             }
+
         }
+
+            
+    }
 
         
 
-    }
 }
